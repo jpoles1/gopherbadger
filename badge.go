@@ -4,6 +4,7 @@ import (
 	"image"
 	"image/color"
 
+	"github.com/llgcode/draw2d"
 	"github.com/llgcode/draw2d/draw2dimg"
 	"github.com/llgcode/draw2d/draw2dkit"
 )
@@ -24,7 +25,7 @@ func createRoundedRectangle(gc *draw2dimg.GraphicContext, fillColor color.RGBA, 
 	gc.SetFillColor(fillColor)
 	gc.FillStroke()
 }
-func main() {
+func drawBadge(coveragePct float64) {
 	//Grey
 	colorGrey := color.RGBA{0x33, 0x33, 0x33, 0xff}
 	//Green: >= 80% overall coverage
@@ -39,7 +40,9 @@ func main() {
 
 	createRoundedRectangle(gc, colorGreen, colorDarkGreen, 0, 0, 600, 120, 5, 5)
 	createRoundedRectangle(gc, colorGrey, colorGrey, 15, 15, 400, 110, 0, 0)
-
+	draw2d.SetFontFolder("./fonts")
+	gc.SetStrokeColor(color.White)
+	gc.StrokeStringAt("Coverage", 20, 20) //(width float64)
 	// Save to file
 	draw2dimg.SaveToPngFile("badge.png", dest)
 }
