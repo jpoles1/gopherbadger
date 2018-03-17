@@ -37,15 +37,15 @@ func drawBadge(coveragePct float64, filename string) error {
 	dc := gg.NewContext(600, 120)
 
 	//Draw background rectangle
-	dc.DrawRoundedRectangle(0, 0, 600, 120, 10)
+	dc.DrawRoundedRectangle(6, 6, 600-6*2, 120-6*2, 10)
 	dc.SetHexColor(accentColor)
 	dc.FillPreserve()
 	dc.SetHexColor(accentBorderColor)
-	dc.SetLineWidth(10.0)
+	dc.SetLineWidth(6.0)
 	dc.Stroke()
 
 	//Draw coverage background rectangle
-	dc.DrawRoundedRectangle(5, 5, 410-5*2, 120-5*2, 5)
+	dc.DrawRoundedRectangle(10, 10, 410-10*2, 120-10*2, 5)
 	dc.SetHexColor(colorDarkGrey)
 	dc.FillPreserve()
 	dc.SetHexColor(colorGrey)
@@ -53,12 +53,12 @@ func drawBadge(coveragePct float64, filename string) error {
 	dc.Stroke()
 
 	//Drawing text
-	err := dc.LoadFontFace("fonts/luxisr.ttf", 84)
+	err := dc.LoadFontFace("fonts/luxisr.ttf", 82)
 	errCheck("Loading font", err)
 	dc.SetHexColor("#ffffffff")
-	dc.DrawString("Coverage:", 5+10, 120-5*2-25)
+	dc.DrawString("Coverage:", 5+10, 120-5*2-27.5)
 	covPctString := fmt.Sprintf("%2.f", coveragePct) + "%"
-	dc.DrawString(covPctString, 410+10, 120-5*2-22)
+	dc.DrawString(covPctString, 410+5, 120-5*2-22)
 	//Save to file
 	err = dc.SavePNG(filename)
 	errCheck("Saving image file", err)

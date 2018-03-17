@@ -1,7 +1,7 @@
 build:
 	go build
 run:
-	make build && ./gocoverbadger
+	make build && ./gopherbadger
 test:
 	go test -v
 cover:

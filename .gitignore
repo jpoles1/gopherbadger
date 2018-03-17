@@ -3,4 +3,4 @@ coverage.*
 vendor
 vendor.orig
 .vscode/settings.json
-gocoverbadger
+gopherbadger
