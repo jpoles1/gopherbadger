@@ -32,7 +32,9 @@ func main() {
 				fmt.Printf("Found coverage = %s%\n", match[1])
 				coverageFloat, err := strconv.ParseFloat(match[1], 32)
 				errCheck("Parsing coverage to float", err)
-				drawBadge(coverageFloat)
+				if err == nil {
+					drawBadge(coverageFloat, "badge.png")
+				}
 			} else {
 				fmt.Println(lineText)
 			}
