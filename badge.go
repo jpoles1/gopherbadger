@@ -1,12 +1,13 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/fogleman/gg"
 )
 
-func drawBadge(coveragePct float64, filename string) {
+func drawBadge(coveragePct float64, filename string) error {
 	//Grey
 	colorGrey := "#777"
 	colorDarkGrey := "#333"
@@ -26,9 +27,11 @@ func drawBadge(coveragePct float64, filename string) {
 	} else if coveragePct >= 55 {
 		accentColor = colorYellow
 		accentBorderColor = colorDarkYellow
-	} else {
+	} else if coveragePct >= 0 {
 		accentColor = colorRed
 		accentBorderColor = colorDarkRed
+	} else {
+		return errors.New("Coverage value must be >= 0%")
 	}
 	//Create graphics context
 	dc := gg.NewContext(600, 120)
@@ -55,8 +58,9 @@ func drawBadge(coveragePct float64, filename string) {
 	dc.SetHexColor("#ffffffff")
 	dc.DrawString("Coverage:", 5+10, 120-5*2-25)
 	covPctString := fmt.Sprintf("%2.f", coveragePct) + "%"
-	fmt.Println("COV GEN:", covPctString)
 	dc.DrawString(covPctString, 410+10, 120-5*2-22)
 	//Save to file
-	dc.SavePNG(filename)
+	err = dc.SavePNG(filename)
+	errCheck("Saving image file", err)
+	return err
 }
