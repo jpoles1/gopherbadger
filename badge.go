@@ -53,12 +53,12 @@ func drawBadge(coveragePct float64, filename string) error {
 	dc.Stroke()
 
 	//Drawing text
-	err := dc.LoadFontFace("fonts/luxisr.ttf", 80)
+	err := dc.LoadFontFace("fonts/luxisr.ttf", 72)
 	errCheck("Loading font", err)
 	dc.SetHexColor("#ffffffff")
-	dc.DrawString("Coverage:", 5+15, 120-5*2-27.5)
+	dc.DrawString("Coverage:", 5+30, 120-5*2-30)
 	covPctString := fmt.Sprintf("%2.f", coveragePct) + "%"
-	dc.DrawString(covPctString, 410+5, 120-5*2-22)
+	dc.DrawString(covPctString, 410+15, 120-5*2-25)
 	//Save to file
 	err = dc.SavePNG(filename)
 	errCheck("Saving image file", err)
