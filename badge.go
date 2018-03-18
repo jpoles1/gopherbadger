@@ -5,7 +5,22 @@ import (
 	"fmt"
 
 	"github.com/fogleman/gg"
+	"github.com/golang/freetype/truetype"
+	"golang.org/x/image/font"
+	"golang.org/x/image/font/gofont/goregular"
 )
+
+func loadGoFontFace(points float64) (font.Face, error) {
+	f, err := truetype.Parse(goregular.TTF)
+	if err != nil {
+		return nil, err
+	}
+	face := truetype.NewFace(f, &truetype.Options{
+		Size: points,
+		// Hinting: font.HintingFull,
+	})
+	return face, nil
+}
 
 func drawBadge(coveragePct float64, filename string) error {
 	//Grey
@@ -53,8 +68,9 @@ func drawBadge(coveragePct float64, filename string) error {
 	dc.Stroke()
 
 	//Drawing text
-	err := dc.LoadFontFace("fonts/luxisr.ttf", 72)
-	errCheck("Loading font", err)
+	fontFace, err := loadGoFontFace(72)
+	errCheck("Loading default font-face.", err)
+	dc.SetFontFace(fontFace)
 	dc.SetHexColor("#ffffffff")
 	dc.DrawString("Coverage:", 5+30, 120-5*2-30)
 	covPctString := fmt.Sprintf("%2.f", coveragePct) + "%"

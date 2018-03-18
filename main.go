@@ -51,5 +51,5 @@ func getCommandOutput(commandString string) chan float64 {
 func main() {
 	var coverageFloat float64
 	coverageFloat = <-getCommandOutput("make cover")
-	drawBadge(coverageFloat, "badge.png")
+	drawBadge(coverageFloat, "coverage_badge.png")
 }
