@@ -5,7 +5,7 @@
 
 One day, I noticed that there was no easy way to generate coverage badges for my Golang projects. So I made one (see above)! 
 
-##Getting Started 
+## Getting Started 
 
 To install the executeable (ensure your $PATH contains $GOPATH/bin):
 
