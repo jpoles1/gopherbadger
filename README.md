@@ -13,7 +13,7 @@ A makefile for Go might look like the following:
 build:
 	go build
 run:
-	make build && ./gocoverbadger
+	make build && ./gopherbadger
 cover:
 	go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o=coverage.html
 ```
