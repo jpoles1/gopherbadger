@@ -13,19 +13,34 @@ To install the executeable (ensure your $PATH contains $GOPATH/bin):
 go get github.com/jpoles1/gopherbadger
 ```
 
-This program can be run in any project which contains a makefile with a "cover" command. This "cover" command should generate an output containg a line like: "coverage: 84%". From this command, the software will generate a badge image in the same folder called "coverage_badge.png". Simple navigate to the project root and run "gopherbadger"!
+This program can be run in any Go project that is compatible with the built-in go cover tool, which will extract a coverage percentage based upon files from all of your Go code (even that in sub-packages). Just run gopherbadger in your project root directory.
 
-## Go Example
+## Quick Start:
 
-A makefile for a Go project might look like the following:
+<hr>
+
+To prevent saving of a .png badge:
+
+`gopherbadger -png=false`
+
+<hr>
+
+To update a .md file badge (note: comma-separated):
+
+`gopherbadger -md="README.md,coverage.md"`
+
+<hr>
+
+Manually set the coverage value (note: do not include %):
+
+`gopherbadger -md="README.md,coverage.md" -manualcov=95`
+
+<hr>
+
+## Confused?
+
+Try running:
 
 ```
-build:
-	go build
-run:
-	make build && ./gopherbadger
-cover:
-	go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o=coverage.html
+gopherbadger -h
 ```
-
-Running "gopherbadger" in a project using this makefile will generate both a badge image "coverage_badge.png" and a coverage report "coverage.html". These can be handy in improving test coverage on your project!
