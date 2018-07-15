@@ -78,5 +78,6 @@ func drawBadge(coveragePct float64, filename string) error {
 	//Save to file
 	err = dc.SavePNG(filename)
 	errCheck("Saving image file", err)
+	fmt.Println("Saved badge to file: " + filename)
 	return err
 }
