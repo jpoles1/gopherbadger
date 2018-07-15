@@ -54,8 +54,8 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64) {
 	badge.ImageExtension = ".svg"
 	badgeURL := badge.generateBadgeBadgeURL(coverageFloat)
-	newImageTag := fmt.Sprintf("![gopherbadger-tag-do-not-edit](%s)", badgeURL)
-	imageTagRegex := `\!\[gopherbadger-tag-do-not-edit\](.*)`
+	newImageTag := fmt.Sprintf("<a href='https://github.com/jpoles1/gopherbadger' target='_blank'>![gopherbadger-tag-do-not-edit](%s)</a>", badgeURL)
+	imageTagRegex := `(<a href=.*>)?\!\[gopherbadger-tag-do-not-edit\]\(.*\)(<\/a>)?`
 	r, err := regexp.Compile(imageTagRegex)
 	if err != nil {
 		logging.Fatal("Compiling regex: ", err)
