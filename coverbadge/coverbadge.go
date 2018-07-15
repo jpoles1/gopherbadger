@@ -18,7 +18,7 @@ type Badge struct {
 
 func (badge Badge) generateBadgeBadgeURL(coverageFloat float64) string {
 	if badge.CoveragePrefix != "" {
-		badge.CoveragePrefix += " "
+		badge.CoveragePrefix += "%20"
 	}
 	urlTemplate := "https://img.shields.io/badge/%sCoverage-%2.f%%25-brightgreen%s?longCache=true&style=%s"
 	return fmt.Sprintf(urlTemplate, badge.CoveragePrefix, coverageFloat, badge.ImageExtension, badge.Style)
@@ -52,6 +52,7 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 }
 
 func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64) {
+	badge.ImageExtension = ".svg"
 	badgeURL := badge.generateBadgeBadgeURL(coverageFloat)
 	newImageTag := fmt.Sprintf("![gopherbadger-tag-do-not-edit](%s)", badgeURL)
 	imageTagRegex := `\!?\[gopherbadger-tag-do-not-edit\](.*)`
