@@ -1,13 +1,13 @@
 build:
 	go build
 run:
-	make build && ./gopherbadger
+	make build && ./gopherbadger -md="README.md"
 test:
 	go test -v
 cover:
-	go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o=coverage.html
+	go test ./... -coverprofile=coverage.out && go tool cover -html=coverage.out -o=coverage.html
 coverage:
-	go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o=coverage.html
+	make cover
 configure:
 	make dep
 dep:
