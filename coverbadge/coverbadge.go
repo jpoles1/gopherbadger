@@ -55,7 +55,7 @@ func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64) {
 	badge.ImageExtension = ".svg"
 	badgeURL := badge.generateBadgeBadgeURL(coverageFloat)
 	newImageTag := fmt.Sprintf("![gopherbadger-tag-do-not-edit](%s)", badgeURL)
-	imageTagRegex := `\!?\[gopherbadger-tag-do-not-edit\](.*)`
+	imageTagRegex := `\!\[gopherbadger-tag-do-not-edit\](.*)`
 	r, err := regexp.Compile(imageTagRegex)
 	if err != nil {
 		logging.Fatal("Compiling regex: ", err)

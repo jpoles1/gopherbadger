@@ -1,7 +1,7 @@
 # GopherBadger
 ### Generate coverage badge images using Go!
 
-![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go%20Coverage-73%25-brightgreen.svg?longCache=true&style=flat)
+![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go%20Coverage-68%25-brightgreen.svg?longCache=true&style=flat)
 
 One day, I noticed that there was no easy way to generate coverage badges for my Golang projects. So I made one (see above)! 
 
@@ -28,6 +28,12 @@ To prevent saving of a .png badge:
 To update a .md file badge (note: comma-separated):
 
 `gopherbadger -md="README.md,coverage.md"`
+
+Either enter a Markdown file that does not already exist, or a Markdown file (like your README.md) that contains the following tag somewhere in the contents:
+
+!`[gopherbadger-tag-do-not-edit]()`
+
+This tag will be replaced by the image for your coverage badge. 
 
 <hr>
 
