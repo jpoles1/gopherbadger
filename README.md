@@ -29,6 +29,12 @@ To update a .md file badge (note: comma-separated):
 
 `gopherbadger -md="README.md,coverage.md"`
 
+Either enter a Markdown file that does not already exist, or a Markdown file (like your README.md) that contains the following tag somewhere in the contents:
+
+!`[gopherbadger-tag-do-not-edit]()`
+
+This tag will be replaced by the image for your coverage badge. 
+
 <hr>
 
 Manually set the coverage value (note: do not include %):
