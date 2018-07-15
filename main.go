@@ -23,7 +23,7 @@ func getCommandOutput(commandString string) chan float64 {
 	reader := bufio.NewReader(stdout)
 	coverageFloatChannel := make(chan float64)
 	go func(reader io.Reader) {
-		re := regexp.MustCompile("cover(?:ed|(?:age))*:? *(\\d+\\.?\\d*) *%")
+		re := regexp.MustCompile("total:\\s*\\(statements\\)?\\s*(\\d+\\.?\\d*)\\s*\\%")
 		scanner := bufio.NewScanner(reader)
 		for scanner.Scan() {
 			lineText := scanner.Text()
@@ -50,6 +50,6 @@ func getCommandOutput(commandString string) chan float64 {
 }
 func main() {
 	var coverageFloat float64
-	coverageFloat = <-getCommandOutput("make cover")
+	coverageFloat = <-getCommandOutput("go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out")
 	drawBadge(coverageFloat, "coverage_badge.png")
 }
