@@ -1,7 +1,7 @@
 # GopherBadger
 ### Generate coverage badge images using Go!
 
-<a href="https://ci.jpoles1.com/jpoles1/gopherbadger"><img src="https://ci.jpoles1.com/api/badges/jpoles1/gopherbadger/status.svg" height="25"/></a>     <img src="https://raw.githubusercontent.com/jpoles1/gopherbadger/master/coverage_badge.png" height="25"/>
+![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Coverage-71%-brightgreen.svg?longCache=true&style=flat)
 
 One day, I noticed that there was no easy way to generate coverage badges for my Golang projects. So I made one (see above)! 
 

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -48,8 +49,27 @@ func getCommandOutput(commandString string) chan float64 {
 	cmd.Wait()
 	return coverageFloatChannel
 }
+func writeBadgeToMd(coverageFloat float64, filepath string) {
+	badgeURL := "https://img.shields.io/badge/Coverage-%2.f%%-brightgreen.svg?longCache=true&style=flat"
+	newImageTag := fmt.Sprintf("![gopherbadger-tag-do-not-edit](%s)", fmt.Sprintf(badgeURL, coverageFloat))
+	imageTagRegex := `\!?\[gopherbadger-tag-do-not-edit\](.*)`
+	r, err := regexp.Compile(imageTagRegex)
+	if err != nil {
+		log.Fatal("Compiling regex: ", err)
+	}
+	filedata, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		log.Fatal("Could not open markdown file: ", err)
+	}
+	markdownData := r.ReplaceAllString(string(filedata), newImageTag)
+	err = ioutil.WriteFile(filepath, []byte(markdownData), 0644)
+	if err != nil {
+		log.Fatal("Error: could not write shield url to markdown file: ", err)
+	}
+}
 func main() {
 	var coverageFloat float64
 	coverageFloat = <-getCommandOutput("go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out")
 	drawBadge(coverageFloat, "coverage_badge.png")
+	writeBadgeToMd(coverageFloat, "./README.md")
 }
