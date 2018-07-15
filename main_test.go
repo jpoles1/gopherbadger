@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestGetCommandOutput(t *testing.T) {
 	getCommandOutput("echo test")

@@ -1,7 +1,7 @@
 # GopherBadger
 ### Generate coverage badge images using Go!
 
-![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Coverage-67%-brightgreen.svg?longCache=true&style=flat)
+![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go Coverage-73%25-brightgreen.png?longCache=true&style=flat)
 
 One day, I noticed that there was no easy way to generate coverage badges for my Golang projects. So I made one (see above)! 
 

@@ -5,3 +5,5 @@ vendor.orig
 .vscode/settings.json
 gopherbadger
 tmp
+coverage_test.md
+test_badge.*
