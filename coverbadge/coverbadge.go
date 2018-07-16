@@ -2,7 +2,7 @@ package coverbadge
 
 import (
 	"fmt"
-	"gopherbadger/logging"
+	"github.com/jpoles1/gopherbadger/logging"
 	"io"
 	"io/ioutil"
 	"net/http"
