@@ -70,6 +70,7 @@ func main() {
 	badgeStyleFlag := flag.String("style", "flat", "Badge style from list: ["+strings.Join(badgeStyles, ",")+"]")
 	updateMdFilesFlag := flag.String("md", "", "A list of markdown filepaths for badge updates.")
 	coveragePrefixFlag := flag.String("prefix", "Go", "A prefix to specify the coverage in your badge.")
+	coverageCommandFlag := flag.String("covercmd", "go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out", "gocover command to run; must print coverage report to stdout")
 	manualCoverageFlag := flag.Float64("manualcov", -1.0, "A manually inputted coverage float.")
 	flag.Parse()
 
@@ -83,7 +84,7 @@ func main() {
 	}
 	var coverageFloat float64
 	if *manualCoverageFlag == -1 {
-		coverageFloat = <-getCommandOutput("go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out")
+		coverageFloat = <-getCommandOutput(*coverageCommandFlag)
 	} else {
 		coverageFloat = *manualCoverageFlag
 	}
