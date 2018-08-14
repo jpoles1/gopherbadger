@@ -3,7 +3,7 @@ workspace:
   path: src/github.com/jpoles1/gopherbadger
 pipeline:
   app:
-    image: golang:1.9.2
+    image: golang:1.10.3
     commands:
       - go get github.com/golang/dep/cmd/dep
       - dep ensure
