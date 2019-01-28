@@ -46,11 +46,11 @@ func getCommandOutput(commandString string) chan float64 {
 				fmt.Println(lineText)
 			}
 		}
+		cmd.Wait()
 	}(reader)
 	if err := cmd.Start(); nil != err {
 		log.Fatalf("Error starting program: %s, %s", cmd.Path, err.Error())
 	}
-	cmd.Wait()
 	return coverageFloatChannel
 }
 
