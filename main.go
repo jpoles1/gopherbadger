@@ -70,8 +70,9 @@ func main() {
 	badgeStyleFlag := flag.String("style", "flat", "Badge style from list: ["+strings.Join(badgeStyles, ",")+"]")
 	updateMdFilesFlag := flag.String("md", "", "A list of markdown filepaths for badge updates.")
 	coveragePrefixFlag := flag.String("prefix", "Go", "A prefix to specify the coverage in your badge.")
-	coverageCommandFlag := flag.String("covercmd", "go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out", "gocover command to run; must print coverage report to stdout")
+	coverageCommandFlag := flag.String("covercmd", "", "gocover command to run; must print coverage report to stdout")
 	manualCoverageFlag := flag.Float64("manualcov", -1.0, "A manually inputted coverage float.")
+	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
 	flag.Parse()
 
 	if !containsString(badgeStyles, *badgeStyleFlag) {
@@ -83,8 +84,25 @@ func main() {
 		ImageExtension: ".png",
 	}
 	var coverageFloat float64
+
+	if *tagsFlag != "" {
+
+	}
+
+	coverageCommand := ""
+	if *coverageCommandFlag != "" {
+		coverageCommand = *coverageCommandFlag
+		if *tagsFlag != "" {
+			log.Println("Warning: When the covercmd is used the tags flag will be ignored.")
+		}
+	} else if *tagsFlag != "" {
+		coverageCommand = "go test ./... -tags \"" + *tagsFlag + "\" -coverprofile=coverage.out && go tool cover -func=coverage.out"
+	} else {
+		coverageCommand = "go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out"
+	}
+
 	if *manualCoverageFlag == -1 {
-		coverageFloat = <-getCommandOutput(*coverageCommandFlag)
+		coverageFloat = <-getCommandOutput(coverageCommand)
 	} else {
 		coverageFloat = *manualCoverageFlag
 	}
