@@ -43,6 +43,12 @@ Manually set the coverage value (note: do not include %):
 
 <hr>
 
+Test code coverage using build tags:
+
+`gopherbadger -tags "unit"`
+
+<hr>
+
 ## Confused?
 
 Try running:
