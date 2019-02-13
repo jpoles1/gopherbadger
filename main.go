@@ -85,15 +85,11 @@ func main() {
 	}
 	var coverageFloat float64
 
-	if *tagsFlag != "" {
-
-	}
-
 	coverageCommand := ""
 	if *coverageCommandFlag != "" {
 		coverageCommand = *coverageCommandFlag
 		if *tagsFlag != "" {
-			log.Println("Warning: When the covercmd is used the tags flag will be ignored.")
+			log.Println("Warning: When the covercmd flag is used the tags flag will be ignored.")
 		}
 	} else if *tagsFlag != "" {
 		coverageCommand = "go test ./... -tags \"" + *tagsFlag + "\" -coverprofile=coverage.out && go tool cover -func=coverage.out"
