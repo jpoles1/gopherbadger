@@ -48,8 +48,8 @@ func getCommandOutput(commandString string) chan float64 {
 		}
 		cmd.Wait()
 	}(reader)
-	if err := cmd.Start(); nil != err {
-		log.Fatalf("Error starting program: %s, %s", cmd.Path, err.Error())
+	if err := cmd.Run(); nil != err {
+		log.Fatalf("Error running program: %s, %s", cmd.Path, err)
 	}
 	return coverageFloatChannel
 }
