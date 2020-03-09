@@ -73,6 +73,7 @@ func main() {
 	coverageCommandFlag := flag.String("covercmd", "", "gocover command to run; must print coverage report to stdout")
 	manualCoverageFlag := flag.Float64("manualcov", -1.0, "A manually inputted coverage float.")
 	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
+	shortFlag := flag.Bool("short", false, "It will skip tests marked as testing.Short()")
 	flag.Parse()
 
 	if !containsString(badgeStyles, *badgeStyleFlag) {
@@ -93,6 +94,8 @@ func main() {
 		}
 	} else if *tagsFlag != "" {
 		coverageCommand = "go test ./... -tags \"" + *tagsFlag + "\" -coverprofile=coverage.out && go tool cover -func=coverage.out"
+	} else if *shortFlag {
+		coverageCommand = "go test ./... -short -coverprofile=coverage.out && go tool cover -func=coverage.out"
 	} else {
 		coverageCommand = "go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out"
 	}
