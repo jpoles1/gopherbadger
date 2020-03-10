@@ -90,7 +90,7 @@ func main() {
 		ImageExtension: ".png",
 	}
 	var coverageFloat float64
-	coverageCommand := fmt.Sprintf("%s && %s", testCommand, toolCoverCommand)
+	coverageCommand := ""
 	if *coverageCommandFlag != "" {
 		coverageCommand = *coverageCommandFlag
 		if *tagsFlag != "" || *shortFlag {
