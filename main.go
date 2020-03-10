@@ -94,7 +94,7 @@ func main() {
 	if *coverageCommandFlag != "" {
 		coverageCommand = *coverageCommandFlag
 		if *tagsFlag != "" || *shortFlag {
-			log.Println("Warning: When the covercmd flag is used the tags and short flag will be ignored.")
+			log.Println("Warning: When the covercmd flag is used the -tags and -short flags will be ignored.")
 		}
 	} else {
 		flagsCommands := ""
