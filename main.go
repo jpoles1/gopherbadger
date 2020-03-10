@@ -18,6 +18,11 @@ import (
 	"github.com/fatih/color"
 )
 
+const (
+	testCommand      = "go test ./... -coverprofile=coverage.out"
+	toolCoverCommand = "go tool cover -func=coverage.out"
+)
+
 func getCommandOutput(commandString string) chan float64 {
 	cmd := exec.Command("bash", "-c", commandString)
 	cmd.Stderr = os.Stderr
@@ -73,6 +78,7 @@ func main() {
 	coverageCommandFlag := flag.String("covercmd", "", "gocover command to run; must print coverage report to stdout")
 	manualCoverageFlag := flag.Float64("manualcov", -1.0, "A manually inputted coverage float.")
 	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
+	shortFlag := flag.Bool("short", false, "It will skip tests marked as testing.Short()")
 	flag.Parse()
 
 	if !containsString(badgeStyles, *badgeStyleFlag) {
@@ -84,17 +90,21 @@ func main() {
 		ImageExtension: ".png",
 	}
 	var coverageFloat float64
-
 	coverageCommand := ""
 	if *coverageCommandFlag != "" {
 		coverageCommand = *coverageCommandFlag
-		if *tagsFlag != "" {
-			log.Println("Warning: When the covercmd flag is used the tags flag will be ignored.")
+		if *tagsFlag != "" || *shortFlag {
+			log.Println("Warning: When the covercmd flag is used the -tags and -short flags will be ignored.")
 		}
-	} else if *tagsFlag != "" {
-		coverageCommand = "go test ./... -tags \"" + *tagsFlag + "\" -coverprofile=coverage.out && go tool cover -func=coverage.out"
 	} else {
-		coverageCommand = "go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out"
+		flagsCommands := ""
+		if *tagsFlag != "" {
+			flagsCommands = flagsCommands + " -tags \"" + *tagsFlag + "\""
+		}
+		if *shortFlag {
+			flagsCommands = flagsCommands + " -short"
+		}
+		coverageCommand = fmt.Sprintf("%s %s && %s", testCommand, flagsCommands, toolCoverCommand)
 	}
 
 	if *manualCoverageFlag == -1 {

@@ -49,6 +49,14 @@ Test code coverage using build tags:
 
 <hr>
 
+<hr>
+
+Test code coverage, skipping short tests:
+
+`gopherbadger -short`
+
+<hr>
+
 ## Confused?
 
 Try running:
