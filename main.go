@@ -107,7 +107,7 @@ func main() {
 			flagsCommands = flagsCommands + " -short"
 		}
 		if *rootFolderFlag != "" {
-			coverageCommand = fmt.Sprintf("go test ./%s/... -coverprofile=coverage.out %s && %s", *rootFolderFlag, flagsCommands, toolCoverCommand)
+			coverageCommand = fmt.Sprintf("go test %s/... -coverprofile=coverage.out %s && %s", *rootFolderFlag, flagsCommands, toolCoverCommand)
 		} else {
 			coverageCommand = fmt.Sprintf("%s %s && %s", testCommand, flagsCommands, toolCoverCommand)
 		}
@@ -123,7 +123,11 @@ func main() {
 	}
 	if *updateMdFilesFlag != "" {
 		for _, filepath := range strings.Split(*updateMdFilesFlag, ",") {
-			coverageBadge.WriteBadgeToMd(filepath, coverageFloat)
+			if *rootFolderFlag != "" {
+				coverageBadge.WriteBadgeToMd(fmt.Sprintf("%s/%s", *rootFolderFlag, filepath), coverageFloat)
+			} else {
+				coverageBadge.WriteBadgeToMd(filepath, coverageFloat)
+			}
 		}
 	}
 }
