@@ -5,8 +5,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/jpoles1/gopherbadger/coverbadge"
-	"github.com/jpoles1/gopherbadger/logging"
 	"io"
 	"log"
 	"os"
@@ -14,6 +12,9 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/dcaponi/gopherbadger/coverbadge"
+	"github.com/dcaponi/gopherbadger/logging"
 
 	"github.com/fatih/color"
 )
@@ -77,6 +78,7 @@ func main() {
 	coveragePrefixFlag := flag.String("prefix", "Go", "A prefix to specify the coverage in your badge.")
 	coverageCommandFlag := flag.String("covercmd", "", "gocover command to run; must print coverage report to stdout")
 	manualCoverageFlag := flag.Float64("manualcov", -1.0, "A manually inputted coverage float.")
+	rootFolderFlag := flag.String("root", ".", "A folder within your project from which to start recursively scanning and testing.")
 	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
 	shortFlag := flag.Bool("short", false, "It will skip tests marked as testing.Short()")
 	flag.Parse()
@@ -104,7 +106,11 @@ func main() {
 		if *shortFlag {
 			flagsCommands = flagsCommands + " -short"
 		}
-		coverageCommand = fmt.Sprintf("%s %s && %s", testCommand, flagsCommands, toolCoverCommand)
+		if *rootFolderFlag != "" {
+			coverageCommand = fmt.Sprintf("go test ./%s/... -coverprofile=coverage.out %s && %s", *rootFolderFlag, flagsCommands, toolCoverCommand)
+		} else {
+			coverageCommand = fmt.Sprintf("%s %s && %s", testCommand, flagsCommands, toolCoverCommand)
+		}
 	}
 
 	if *manualCoverageFlag == -1 {

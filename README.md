@@ -1,7 +1,7 @@
 # GopherBadger
 ### Generate coverage badge images using Go!
 
-<a href='https://github.com/jpoles1/gopherbadger' target='_blank'>![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go%20Coverage-68%25-brightgreen.svg?longCache=true&style=flat)</a>
+<a href='https://github.com/dcaponi/gopherbadger' target='_blank'>![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go%20Coverage-68%25-brightgreen.svg?longCache=true&style=flat)</a>
 
 One day, I noticed that there was no easy way to generate coverage badges for my Golang projects. So I made one (see above)! 
 
@@ -10,7 +10,7 @@ One day, I noticed that there was no easy way to generate coverage badges for my
 To install the executeable (ensure your $PATH contains $GOPATH/bin):
 
 ```
-go get github.com/jpoles1/gopherbadger
+go get github.com/dcaponi/gopherbadger
 ```
 
 This program can be run in any Go project that is compatible with the built-in go cover tool, which will extract a coverage percentage based upon files from all of your Go code (even that in sub-packages). Just run gopherbadger in your project root directory.
