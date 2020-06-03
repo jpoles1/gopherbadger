@@ -19,10 +19,7 @@ import (
 	"github.com/fatih/color"
 )
 
-const (
-	testCommand      = "go test ./... -coverprofile=coverage.out"
-	toolCoverCommand = "go tool cover -func=coverage.out"
-)
+const toolCoverCommand = "go tool cover -func=coverage.out"
 
 func getCommandOutput(commandString string) chan float64 {
 	cmd := exec.Command("bash", "-c", commandString)
@@ -86,13 +83,16 @@ func main() {
 	if !containsString(badgeStyles, *badgeStyleFlag) {
 		logging.Fatal("Invalid style flag! Must be a member of list: ["+strings.Join(badgeStyles, ", ")+"]", errors.New("Invalid style flag"))
 	}
+
 	coverageBadge := coverbadge.Badge{
 		CoveragePrefix: *coveragePrefixFlag,
 		Style:          *badgeStyleFlag,
 		ImageExtension: ".png",
 	}
+
 	var coverageFloat float64
 	coverageCommand := ""
+
 	if *coverageCommandFlag != "" {
 		coverageCommand = *coverageCommandFlag
 		if *tagsFlag != "" || *shortFlag {
@@ -106,11 +106,11 @@ func main() {
 		if *shortFlag {
 			flagsCommands = flagsCommands + " -short"
 		}
+		rootFolder := "."
 		if *rootFolderFlag != "" {
-			coverageCommand = fmt.Sprintf("go test %s/... -coverprofile=coverage.out %s && %s", *rootFolderFlag, flagsCommands, toolCoverCommand)
-		} else {
-			coverageCommand = fmt.Sprintf("%s %s && %s", testCommand, flagsCommands, toolCoverCommand)
+			rootFolder = *rootFolderFlag
 		}
+		coverageCommand = fmt.Sprintf("go test %s/... -coverprofile=coverage.out %s && %s", rootFolder, flagsCommands, toolCoverCommand)
 	}
 
 	if *manualCoverageFlag == -1 {
