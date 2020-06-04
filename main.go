@@ -123,11 +123,7 @@ func main() {
 	}
 	if *updateMdFilesFlag != "" {
 		for _, filepath := range strings.Split(*updateMdFilesFlag, ",") {
-			if *rootFolderFlag != "" {
-				coverageBadge.WriteBadgeToMd(fmt.Sprintf("%s/%s", *rootFolderFlag, filepath), coverageFloat)
-			} else {
-				coverageBadge.WriteBadgeToMd(filepath, coverageFloat)
-			}
+			coverageBadge.WriteBadgeToMd(filepath, coverageFloat)
 		}
 	}
 }
