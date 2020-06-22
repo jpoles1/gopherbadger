@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: src/github.com/dcaponi/gopherbadger
+  path: src/github.com/jpoles1/gopherbadger
 pipeline:
   app:
     image: golang:1.10.3

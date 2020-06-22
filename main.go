@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dcaponi/gopherbadger/coverbadge"
-	"github.com/dcaponi/gopherbadger/logging"
+	"github.com/jpoles1/gopherbadger/coverbadge"
+	"github.com/jpoles1/gopherbadger/logging"
 
 	"github.com/fatih/color"
 )
