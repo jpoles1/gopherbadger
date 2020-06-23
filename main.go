@@ -5,8 +5,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/jpoles1/gopherbadger/coverbadge"
-	"github.com/jpoles1/gopherbadger/logging"
 	"io"
 	"log"
 	"os"
@@ -15,13 +13,13 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/jpoles1/gopherbadger/coverbadge"
+	"github.com/jpoles1/gopherbadger/logging"
+
 	"github.com/fatih/color"
 )
 
-const (
-	testCommand      = "go test ./... -coverprofile=coverage.out"
-	toolCoverCommand = "go tool cover -func=coverage.out"
-)
+const toolCoverCommand = "go tool cover -func=coverage.out"
 
 func getCommandOutput(commandString string) chan float64 {
 	cmd := exec.Command("bash", "-c", commandString)
@@ -77,6 +75,7 @@ func main() {
 	coveragePrefixFlag := flag.String("prefix", "Go", "A prefix to specify the coverage in your badge.")
 	coverageCommandFlag := flag.String("covercmd", "", "gocover command to run; must print coverage report to stdout")
 	manualCoverageFlag := flag.Float64("manualcov", -1.0, "A manually inputted coverage float.")
+	rootFolderFlag := flag.String("root", ".", "A folder within your project from which to start recursively scanning and testing.")
 	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
 	shortFlag := flag.Bool("short", false, "It will skip tests marked as testing.Short()")
 	flag.Parse()
@@ -84,13 +83,16 @@ func main() {
 	if !containsString(badgeStyles, *badgeStyleFlag) {
 		logging.Fatal("Invalid style flag! Must be a member of list: ["+strings.Join(badgeStyles, ", ")+"]", errors.New("Invalid style flag"))
 	}
+
 	coverageBadge := coverbadge.Badge{
 		CoveragePrefix: *coveragePrefixFlag,
 		Style:          *badgeStyleFlag,
 		ImageExtension: ".png",
 	}
+
 	var coverageFloat float64
 	coverageCommand := ""
+
 	if *coverageCommandFlag != "" {
 		coverageCommand = *coverageCommandFlag
 		if *tagsFlag != "" || *shortFlag {
@@ -104,7 +106,7 @@ func main() {
 		if *shortFlag {
 			flagsCommands = flagsCommands + " -short"
 		}
-		coverageCommand = fmt.Sprintf("%s %s && %s", testCommand, flagsCommands, toolCoverCommand)
+		coverageCommand = fmt.Sprintf("go test %s/... -coverprofile=coverage.out %s && %s", rootFolder, flagsCommands, toolCoverCommand)
 	}
 
 	if *manualCoverageFlag == -1 {
