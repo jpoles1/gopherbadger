@@ -106,10 +106,6 @@ func main() {
 		if *shortFlag {
 			flagsCommands = flagsCommands + " -short"
 		}
-		rootFolder := "."
-		if *rootFolderFlag != "" {
-			rootFolder = *rootFolderFlag
-		}
 		coverageCommand = fmt.Sprintf("go test %s/... -coverprofile=coverage.out %s && %s", rootFolder, flagsCommands, toolCoverCommand)
 	}
 
