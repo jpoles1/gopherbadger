@@ -6,7 +6,22 @@ import (
 
 func TestGetCommandOutput(t *testing.T) {
 	getCommandOutput("echo test")
-	//getCommandOutput("echo 'testline\ncoverage: 35%'")
+	getCommandOutput("echo 'testline\ncoverage: 35%'")
+}
+
+func TestBadger(t *testing.T) {
+	defaultConfig := gopherBadgerConfig{
+		badgeOutputFlag:     true,
+		badgeStyleFlag:      "flat",
+		updateMdFilesFlag:   "",
+		coveragePrefixFlag:  "Go",
+		coverageCommandFlag: "echo 'testline\ncoverage: 35%'",
+		manualCoverageFlag:  90,
+		rootFolderFlag:      ".",
+		tagsFlag:            "",
+		shortFlag:           false,
+	}
+	badger(defaultConfig)
 }
 
 func TestDrawBadge(t *testing.T) {
