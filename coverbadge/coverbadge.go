@@ -20,7 +20,7 @@ func (badge Badge) generateBadgeBadgeURL(coverageFloat float64) string {
 	if badge.CoveragePrefix != "" {
 		badge.CoveragePrefix += "%20"
 	}
-	urlTemplate := "https://img.shields.io/badge/%sCoverage-%2.f%%25-brightgreen%s?longCache=true&style=%s"
+	urlTemplate := "https://img.shields.io/badge/%sCoverage-%.f%%25-brightgreen%s?longCache=true&style=%s"
 	return fmt.Sprintf(urlTemplate, badge.CoveragePrefix, coverageFloat, badge.ImageExtension, badge.Style)
 }
 
