@@ -51,7 +51,7 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 	return
 }
 
-func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64) {
+func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64, isSilent bool) {
 	badge.ImageExtension = ".svg"
 	badgeURL := badge.generateBadgeBadgeURL(coverageFloat)
 	newImageTag := fmt.Sprintf("<a href='https://github.com/jpoles1/gopherbadger' target='_blank'>![gopherbadger-tag-do-not-edit](%s)</a>", badgeURL)
@@ -75,5 +75,7 @@ func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64) {
 		logging.Fatal("Error: could not write badge url to markdown file: ", err)
 		return
 	}
-	logging.Success("Wrote badge image to markdown file: " + filepath)
+	if !isSilent {
+		logging.Success("Wrote badge image to markdown file: " + filepath)
+	}
 }
