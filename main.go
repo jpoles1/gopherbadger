@@ -21,7 +21,7 @@ import (
 
 const toolCoverCommand = "go tool cover -func=coverage.out"
 
-func getCommandOutput(commandString string) chan float64 {
+func getCommandOutput(commandString string, isSilent bool) chan float64 {
 	cmd := exec.Command("bash", "-c", commandString)
 	cmd.Stderr = os.Stderr
 	stdout, err := cmd.StdoutPipe()
@@ -37,8 +37,9 @@ func getCommandOutput(commandString string) chan float64 {
 			lineText := scanner.Text()
 			match := re.FindStringSubmatch(lineText)
 			if len(match) == 2 {
-				color.Green(lineText)
-				//fmt.Printf("Found coverage = %s%\n", match[1])
+				if !isSilent {
+					color.Green(lineText)
+				}
 				coverageValue, err := strconv.ParseFloat(match[1], 32)
 				errCheck("Parsing coverage to float", err)
 				if err == nil {
@@ -46,7 +47,9 @@ func getCommandOutput(commandString string) chan float64 {
 				}
 				break
 			} else {
-				fmt.Println(lineText)
+				if !isSilent {
+					fmt.Println(lineText)
+				}
 			}
 		}
 		cmd.Wait()
@@ -77,6 +80,7 @@ type gopherBadgerConfig struct {
 	rootFolderFlag      string
 	tagsFlag            string
 	shortFlag           bool
+	silentFlag          bool
 }
 
 var badgeStyles = []string{"plastic", "flat", "flat-square", "for-the-badge", "social"}
@@ -91,6 +95,7 @@ func main() {
 	rootFolderFlag := flag.String("root", ".", "A folder within your project from which to start recursively scanning and testing.")
 	tagsFlag := flag.String("tags", "", "The build tests you'd like to include in your coverage")
 	shortFlag := flag.Bool("short", false, "It will skip tests marked as testing.Short()")
+	silentFlag := flag.Bool("silent", false, "Do not output anything unless errors are encountered")
 	flag.Parse()
 	config := gopherBadgerConfig{
 		badgeOutputFlag:     *badgeOutputFlag,
@@ -102,6 +107,7 @@ func main() {
 		rootFolderFlag:      *rootFolderFlag,
 		tagsFlag:            *tagsFlag,
 		shortFlag:           *shortFlag,
+		silentFlag:          *silentFlag,
 	}
 	badger(config)
 }
@@ -137,7 +143,7 @@ func badger(config gopherBadgerConfig) {
 	}
 
 	if config.manualCoverageFlag == -1 {
-		coverageFloat = <-getCommandOutput(coverageCommand)
+		coverageFloat = <-getCommandOutput(coverageCommand, config.silentFlag)
 	} else {
 		coverageFloat = config.manualCoverageFlag
 	}

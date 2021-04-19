@@ -3,6 +3,7 @@ package coverbadge
 import (
 	"testing"
 )
+
 var coverageBadge = Badge{
 	CoveragePrefix: "Go",
 	Style:          "flat",
@@ -13,7 +14,7 @@ func TestDownloadBadge(t *testing.T) {
 	coverageBadge.DownloadBadge("test_badge.png", 66)
 }
 func TestWriteBadgeToMd(t *testing.T) {
-	coverageBadge.WriteBadgeToMd("coverage_test.md", 22)
+	coverageBadge.WriteBadgeToMd("coverage_test.md", 22, false)
 }
 func TestGenerateBadgeBadgeURL_1(t *testing.T) {
 	testUrl(t, 1.1, "https://img.shields.io/badge/Go%20Coverage-1%25-brightgreen.png?longCache=true&style=flat")
