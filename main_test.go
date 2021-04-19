@@ -5,8 +5,8 @@ import (
 )
 
 func TestGetCommandOutput(t *testing.T) {
-	getCommandOutput("echo test")
-	getCommandOutput("echo 'testline\ncoverage: 35%'")
+	getCommandOutput("echo test", false)
+	getCommandOutput("echo 'testline\ncoverage: 35%'", false)
 }
 
 func TestBadger(t *testing.T) {
