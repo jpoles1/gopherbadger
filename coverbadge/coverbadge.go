@@ -8,7 +8,7 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/ex-preman/gopherbadger/logging"
+	"github.com/jpoles1/gopherbadger/logging"
 )
 
 type Badge struct {
