@@ -2,12 +2,15 @@ package coverbadge
 
 import (
 	"fmt"
-	"github.com/jpoles1/gopherbadger/logging"
 	"io"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
+
+	"github.com/jpoles1/gopherbadger/logging"
 )
 
 type Badge struct {
@@ -20,8 +23,8 @@ func (badge Badge) generateBadgeBadgeURL(coverageFloat float64) string {
 	if badge.CoveragePrefix != "" {
 		badge.CoveragePrefix += "%20"
 	}
-	urlTemplate := "https://img.shields.io/badge/%sCoverage-%.f%%25-brightgreen%s?longCache=true&style=%s"
-	return fmt.Sprintf(urlTemplate, badge.CoveragePrefix, coverageFloat, badge.ImageExtension, badge.Style)
+	urlTemplate := "https://img.shields.io/badge/%sCoverage-%s%%25-brightgreen%s?longCache=true&style=%s"
+	return fmt.Sprintf(urlTemplate, badge.CoveragePrefix, strconv.FormatFloat(math.Ceil(coverageFloat*10)/10, 'f', -1, 64), badge.ImageExtension, badge.Style)
 }
 
 func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
@@ -47,8 +50,6 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 		logging.Fatal("Writing file to disk", err)
 		return
 	}
-
-	return
 }
 
 func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64) {

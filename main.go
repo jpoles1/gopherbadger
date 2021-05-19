@@ -28,17 +28,18 @@ func getCommandOutput(commandString string) chan float64 {
 	if nil != err {
 		log.Fatalf("Error obtaining stdout: %s", err.Error())
 	}
+
 	reader := bufio.NewReader(stdout)
 	coverageFloatChannel := make(chan float64)
 	go func(reader io.Reader) {
-		re := regexp.MustCompile("total:\\s*\\(statements\\)?\\s*(\\d+\\.?\\d*)\\s*\\%")
+		re := regexp.MustCompile(`total:\s*\(statements\)?\s*(\d+\.?\d*)\s*\%`)
 		scanner := bufio.NewScanner(reader)
 		for scanner.Scan() {
 			lineText := scanner.Text()
 			match := re.FindStringSubmatch(lineText)
 			if len(match) == 2 {
 				color.Green(lineText)
-				//fmt.Printf("Found coverage = %s%\n", match[1])
+				// fmt.Printf("Found coverage = %s\n", match[1])
 				coverageValue, err := strconv.ParseFloat(match[1], 32)
 				errCheck("Parsing coverage to float", err)
 				if err == nil {
@@ -49,10 +50,16 @@ func getCommandOutput(commandString string) chan float64 {
 				fmt.Println(lineText)
 			}
 		}
-		cmd.Wait()
+		if err := cmd.Wait(); err != nil {
+			log.Fatal(err)
+		}
+		if err := scanner.Err(); err != nil {
+			log.Fatal(err)
+		}
 	}(reader)
-	if err := cmd.Run(); nil != err {
-		log.Fatalf("Error running program: %s, %s", cmd.Path, err)
+
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
 	}
 	return coverageFloatChannel
 }
@@ -141,7 +148,13 @@ func badger(config gopherBadgerConfig) {
 	} else {
 		coverageFloat = config.manualCoverageFlag
 	}
-	if config.badgeOutputFlag == true {
+
+	// validate coverageFloat value
+	if coverageFloat < float64(0) || coverageFloat > float64(100) {
+		logging.Fatal("Invalid percentage value! Must be a value between 0-100", errors.New("Invalid coverage value"))
+	}
+
+	if config.badgeOutputFlag {
 		coverageBadge.DownloadBadge("coverage_badge.png", coverageFloat)
 	}
 	if config.updateMdFilesFlag != "" {
