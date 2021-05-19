@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 
 	"github.com/jpoles1/gopherbadger/logging"
 )
@@ -21,8 +22,8 @@ func (badge Badge) generateBadgeBadgeURL(coverageFloat float64) string {
 	if badge.CoveragePrefix != "" {
 		badge.CoveragePrefix += "%20"
 	}
-	urlTemplate := "https://img.shields.io/badge/%sCoverage-%.2f%%25-brightgreen%s?longCache=true&style=%s"
-	return fmt.Sprintf(urlTemplate, badge.CoveragePrefix, coverageFloat, badge.ImageExtension, badge.Style)
+	urlTemplate := "https://img.shields.io/badge/%sCoverage-%s%%25-brightgreen%s?longCache=true&style=%s"
+	return fmt.Sprintf(urlTemplate, badge.CoveragePrefix, strconv.FormatFloat(coverageFloat, 'f', -1, 64), badge.ImageExtension, badge.Style)
 }
 
 func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {

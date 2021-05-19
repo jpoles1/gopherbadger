@@ -148,6 +148,12 @@ func badger(config gopherBadgerConfig) {
 	} else {
 		coverageFloat = config.manualCoverageFlag
 	}
+
+	// validate coverageFloat value
+	if coverageFloat < float64(0) || coverageFloat > float64(100) {
+		logging.Fatal("Invalid percentage value! Must be a value between 0-100", errors.New("Invalid coverage value"))
+	}
+
 	if config.badgeOutputFlag {
 		coverageBadge.DownloadBadge("coverage_badge.png", coverageFloat)
 	}
