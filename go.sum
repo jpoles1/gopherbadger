@@ -1,3 +1,7 @@
+github.com/ex-preman/gopherbadger v1.0.0 h1:w2iPAyJ0I/xEELQJIBDaZdjEVKFWbG3uqXsCUDyRRAs=
+github.com/ex-preman/gopherbadger v2.4.0+incompatible h1:udvRB6XU/F15Wf34GPMMoSnBWYFqZGf3J7DW2Cjlkg8=
+github.com/ex-preman/gopherbadger/v3 v3.0.0 h1:2d/gce392J+fB4b+YY1yHvwjnxk8wff04REbp/EVDb8=
+github.com/ex-preman/gopherbadger/v3 v3.0.0/go.mod h1:FCEGvQZPUmoZGgEmcvq5jSD0RrF5cYUTF/JZ5b+6/UE=
 github.com/fatih/color v1.6.0 h1:66qjqZk8kalYAvDRtM1AdAJQI0tj4Wrue3Eq3B3pmFU=
 github.com/fatih/color v1.6.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
 github.com/fogleman/gg v1.0.0 h1:O2ToZn8ijCP2gXhVY701P1b1jrxKoVPh6CkaX2/PACE=
