@@ -116,7 +116,7 @@ func main() {
 
 func badger(config gopherBadgerConfig) {
 	if !containsString(badgeStyles, config.badgeStyleFlag) {
-		logging.Fatal("Invalid style flag! Must be a member of list: ["+strings.Join(badgeStyles, ", ")+"]", errors.New("Invalid style flag"))
+		logging.Fatal("Invalid style flag! Must be a member of list: ["+strings.Join(badgeStyles, ", ")+"]", errors.New("invalid style flag"))
 	}
 
 	coverageBadge := coverbadge.Badge{
@@ -149,7 +149,7 @@ func badger(config gopherBadgerConfig) {
 	} else {
 		coverageFloat = config.manualCoverageFlag
 	}
-	if config.badgeOutputFlag == true {
+	if config.badgeOutputFlag {
 		coverageBadge.DownloadBadge("coverage_badge.png", coverageFloat)
 	}
 	if config.updateMdFilesFlag != "" {

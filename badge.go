@@ -46,7 +46,7 @@ func drawBadge(coveragePct float64, filename string) error {
 		accentColor = colorRed
 		accentBorderColor = colorDarkRed
 	} else {
-		return errors.New("Coverage value must be >= 0%")
+		return errors.New("coverage value must be >= 0%")
 	}
 	//Create graphics context
 	dc := gg.NewContext(600, 120)
