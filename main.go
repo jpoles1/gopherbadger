@@ -154,7 +154,7 @@ func badger(config gopherBadgerConfig) {
 	}
 	if config.updateMdFilesFlag != "" {
 		for _, filepath := range strings.Split(config.updateMdFilesFlag, ",") {
-			coverageBadge.WriteBadgeToMd(filepath, coverageFloat)
+			coverageBadge.WriteBadgeToMd(filepath, coverageFloat, config.silentFlag)
 		}
 	}
 }
