@@ -6,7 +6,6 @@ require (
 	github.com/fatih/color v1.6.0
 	github.com/fogleman/gg v1.0.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
-	github.com/jpoles1/gopherbadger v2.5.0+incompatible
 	golang.org/x/image v0.0.0-20180314180248-f3a9b89b59de
 )
 
