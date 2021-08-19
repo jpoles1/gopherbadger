@@ -31,7 +31,7 @@ func getCommandOutput(commandString string, isSilent bool) chan float64 {
 	reader := bufio.NewReader(stdout)
 	coverageFloatChannel := make(chan float64)
 	go func(reader io.Reader) {
-		re := regexp.MustCompile("total:\\s*\\(statements\\)?\\s*(\\d+\\.?\\d*)\\s*\\%")
+		re := regexp.MustCompile(`total:\s*\(statements\)?\s*(\d+\.?\d*)\s*%`)
 		scanner := bufio.NewScanner(reader)
 		for scanner.Scan() {
 			lineText := scanner.Text()
