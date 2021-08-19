@@ -25,9 +25,15 @@ func TestBadger(t *testing.T) {
 }
 
 func TestDrawBadge(t *testing.T) {
-	drawBadge(22.7, "test_badge.png")
-	drawBadge(88, "test_badge.png")
-	drawBadge(66, "test_badge.png")
+	if err := drawBadge(22.7, "test_badge.png"); err != nil {
+		t.Errorf("error drawing 22.7 coverage: %s", err.Error())
+	}
+	if err := drawBadge(88, "test_badge.png"); err != nil {
+		t.Errorf("error drawing 88% coverage: %s", err.Error())
+	}
+	if err := drawBadge(66, "test_badge.png"); err != nil {
+		t.Errorf("error drawing 66% coverage: %s", err.Error())
+	}
 	if drawBadge(66, "bad_folder/test_badge.png") == nil {
 		t.Error("Should respond with error when saving to invalid folder")
 	}
