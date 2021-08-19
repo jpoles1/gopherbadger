@@ -1,5 +1,7 @@
 .PHONY: build run test cover coverage configure dep
 
+all: fmt configure build cover run test
+
 build:
 	go build
 
@@ -21,3 +23,7 @@ configure:
 	go mod tidy -v
 
 dep: configure
+
+fmt:
+	go fmt ./...
+	go mod edit -fmt
