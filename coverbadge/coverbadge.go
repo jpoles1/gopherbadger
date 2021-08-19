@@ -31,7 +31,11 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 		logging.Fatal("Creating file", err)
 		return
 	}
-	defer out.Close()
+	defer func() {
+		if cerr := out.Close(); cerr != nil {
+			logging.Error("Closing output file", cerr)
+		}
+	}()
 
 	// Get the data
 	resp, err := http.Get(badge.generateBadgeBadgeURL(coverageFloat))
@@ -39,7 +43,11 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 		logging.Fatal("Fetching badge image", err)
 		return
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if bcerr := resp.Body.Close(); bcerr != nil {
+			logging.Error("closing response body", bcerr)
+		}
+	}()
 
 	// Write the body to file
 	_, err = io.Copy(out, resp.Body)
@@ -47,8 +55,6 @@ func (badge Badge) DownloadBadge(filepath string, coverageFloat float64) {
 		logging.Fatal("Writing file to disk", err)
 		return
 	}
-
-	return
 }
 
 func (badge Badge) WriteBadgeToMd(filepath string, coverageFloat float64, isSilent bool) {
